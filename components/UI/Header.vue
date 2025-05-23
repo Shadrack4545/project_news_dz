@@ -50,7 +50,7 @@
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
-import Draver from '@/components/Draver.vue';
+import Draver from '~/components/Drawer.vue';
 import ModalForm from '@/components/ModalForm.vue';
 
 const router = useRouter();

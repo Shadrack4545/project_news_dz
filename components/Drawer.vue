@@ -1,19 +1,32 @@
 <template>
-  <div class="burger" @click="toggleDrawer" :class="{ open: drawerOpen }">
-    <span></span>
-    <span></span>
-    <span></span>
+  <div class="burger" @click="toggleDrawer" :class="{ open: drawerOpen }" aria-label="Toggle menu" role="button" tabindex="0">
+    <svg
+      width="30"
+      height="30"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="white"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      :class="{ open: drawerOpen }"
+      aria-hidden="true"
+    >
+      <line x1="3" y1="7" x2="21" y2="7" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="17" x2="21" y2="17" />
+    </svg>
   </div>
   <div v-show="drawerOpen" class="overlay" @click="toggleDrawer"></div>
 
-  <div class="draver" :class="{ open: drawerOpen }">
+  <div class="drawer" :class="{ open: drawerOpen }">
     <nav>
       <NuxtLink :to="'/'">Реализованные проекты</NuxtLink>
       <NuxtLink :to="'/news'">Новости</NuxtLink>
       <NuxtLink :to="'/contacts'">Контакты</NuxtLink>
     </nav>
 
-    <div class="draver__contacts">
+    <div class="drawer__contacts">
       <a :href="'tel:' + contacts.phone">{{ contacts.phone }}</a>
       <a>{{ contacts.email }}</a>
       <a>{{ contacts.address }}</a>
@@ -22,9 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { contacts } from '~/data/contacts';
+
 const router = useRouter();
 const route = useRoute();
 
@@ -33,23 +47,26 @@ const drawerOpen = ref<boolean>(false);
 const toggleDrawer = (): void => {
   drawerOpen.value = !drawerOpen.value;
 };
+
 const handleResize = (): void => {
   if (window.innerWidth > 992) {
     drawerOpen.value = false;
   }
 };
+
 onMounted(() => {
   window.addEventListener('resize', handleResize);
 });
+
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
 });
 
-watch(drawerOpen, isOpen => {
+watch(drawerOpen, (isOpen) => {
   if (isOpen) {
     document.body.style.overflow = 'hidden';
   } else {
-    document.body.style.overflow = '';
+    document.body.style.overflow = 'visible';
   }
 });
 </script>
@@ -60,39 +77,24 @@ watch(drawerOpen, isOpen => {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  border-radius: 30%;
+  cursor: pointer;
   width: 50px;
   height: 50px;
   background: $color-primary;
+  border-radius: 30%;
   z-index: 100;
-  cursor: pointer;
-  span {
-    transform-origin: center;
-    display: flex;
-    flex-direction: column;
-    width: 20px;
-    height: 2px;
-    background-color: #fff;
-    margin: 2px 0;
-    transition: all 0.2s ease-in-out;
+
+  svg {
+    transition: transform 0.3s ease-in-out;
+    stroke: white;
   }
-}
-.burger.open {
-  span {
-    &:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    &:nth-child(2) {
-      opacity: 0;
-    }
-    &:nth-child(3) {
-      transform: rotate(-45deg) translate(4px, -4px);
-    }
+
+  &.open svg {
+    transform: rotate(90deg);
   }
 }
 
-.draver {
+.drawer {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -104,8 +106,9 @@ watch(drawerOpen, isOpen => {
   width: 65%;
   z-index: 99;
   transform: translateX(100%);
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
   padding: 80px 20px 20px 20px;
+
   nav {
     display: flex;
     flex-direction: column;
@@ -114,24 +117,25 @@ watch(drawerOpen, isOpen => {
       cursor: pointer;
       text-decoration: none;
       color: #fff;
-      font-size: 1.6rem;
       margin: 3% 0;
 
       font-family: $font-secondary;
-      font-style: normal;
       font-weight: 400;
       font-size: 18px;
       line-height: 120%;
       transition: 0.3s;
-    }
-    a:hover {
-      opacity: 0.6;
+
+      &:hover {
+        opacity: 0.6;
+      }
     }
   }
-  .draver__contacts {
+
+  &__contacts {
     margin-top: auto;
     display: flex;
     flex-direction: column;
+
     a {
       cursor: pointer;
       text-decoration: none;
@@ -141,14 +145,15 @@ watch(drawerOpen, isOpen => {
       align-items: center;
 
       font-family: $font-primary;
-      font-style: normal;
       font-weight: 400;
       font-size: 14px;
       transition: 0.3s;
+
       &:hover {
         opacity: 0.6;
       }
     }
+
     a:nth-child(1)::before {
       content: '';
       display: inline-block;
@@ -159,6 +164,7 @@ watch(drawerOpen, isOpen => {
       mask-size: 16px 16px;
       margin-right: 10px;
     }
+
     a:nth-child(2)::before {
       content: '';
       background-color: #fff;
@@ -169,6 +175,7 @@ watch(drawerOpen, isOpen => {
       display: inline-block;
       margin-right: 10px;
     }
+
     a:nth-child(3)::before {
       content: '';
       background-color: #fff;
@@ -181,9 +188,11 @@ watch(drawerOpen, isOpen => {
     }
   }
 }
-.draver.open {
+
+.drawer.open {
   transform: translateX(0%);
 }
+
 .overlay {
   position: fixed;
   top: 0;
@@ -192,6 +201,6 @@ watch(drawerOpen, isOpen => {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 90;
-  transition: all 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 </style>
