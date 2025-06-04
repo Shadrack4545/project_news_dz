@@ -1,5 +1,12 @@
 <template>
-  <div class="burger" @click="toggleDrawer" :class="{ open: drawerOpen }" aria-label="Toggle menu" role="button" tabindex="0">
+  <div
+    class="burger"
+    @click="toggleDrawer"
+    :class="{ open: drawerOpen }"
+    aria-label="Toggle menu"
+    role="button"
+    tabindex="0"
+  >
     <svg
       width="30"
       height="30"
@@ -9,12 +16,11 @@
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      :class="{ open: drawerOpen }"
       aria-hidden="true"
     >
-      <line x1="3" y1="7" x2="21" y2="7" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="17" x2="21" y2="17" />
+      <line class="line1" x1="3" y1="7" x2="21" y2="7" />
+      <line class="line2" x1="3" y1="12" x2="21" y2="12" />
+      <line class="line3" x1="3" y1="17" x2="21" y2="17" />
     </svg>
   </div>
   <div v-show="drawerOpen" class="overlay" @click="toggleDrawer"></div>
@@ -85,12 +91,25 @@ watch(drawerOpen, (isOpen) => {
   z-index: 100;
 
   svg {
-    transition: transform 0.3s ease-in-out;
     stroke: white;
   }
 
-  &.open svg {
-    transform: rotate(90deg);
+  line {
+    transition: all 0.3s ease-in-out;
+  }
+
+  &.open {
+    line.line1 {
+      transform: translateY(5px) rotate(45deg);
+      transform-origin: center;
+    }
+    line.line2 {
+      opacity: 0;
+    }
+    line.line3 {
+      transform: translateY(-5px) rotate(-45deg);
+      transform-origin: center;
+    }
   }
 }
 

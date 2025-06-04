@@ -1,24 +1,19 @@
 <template>
-  <!-- Burger Icon -->
   <div class="burger" @click="toggleDrawer" :class="{ open: drawerOpen }">
     <span></span>
     <span></span>
     <span></span>
   </div>
 
-  <!-- Overlay (Click to Close Drawer) -->
   <div v-show="drawerOpen" class="overlay" @click="toggleDrawer"></div>
 
-  <!-- Drawer Menu -->
   <div class="drawer" :class="{ open: drawerOpen }">
-    <!-- Navigation Links -->
     <nav>
       <NuxtLink to="/" class="drawer__link">Completed Projects</NuxtLink>
       <NuxtLink to="/news" class="drawer__link">News</NuxtLink>
       <NuxtLink to="/contacts" class="drawer__link">Contacts</NuxtLink>
     </nav>
 
-    <!-- Contact Info Section -->
     <div class="drawer__contacts">
       <a :href="`tel:${contacts.phone}`" class="drawer__contact-link">{{ contacts.phone }}</a>
       <a :href="`mailto:${contacts.email}`" class="drawer__contact-link">{{ contacts.email }}</a>
@@ -31,32 +26,26 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { contacts } from '~/data/contacts';
 
-// Drawer state
 const drawerOpen = ref(false);
 
-// Toggle drawer visibility
 const toggleDrawer = (): void => {
   drawerOpen.value = !drawerOpen.value;
 };
 
-// Close the drawer on window resize (if width > 992px)
 const handleResize = (): void => {
   if (window.innerWidth > 992) {
     drawerOpen.value = false;
   }
 };
 
-// Listen for resize events
 onMounted(() => {
   window.addEventListener('resize', handleResize);
 });
 
-// Remove event listener on component destruction
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize);
 });
 
-// Lock body scroll when drawer is open
 watch(drawerOpen, (isOpen) => {
   document.body.style.overflow = isOpen ? 'hidden' : '';
 });
