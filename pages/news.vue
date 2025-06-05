@@ -1,89 +1,59 @@
 <template>
   <div class="news">
     <h4 class="route"><span>Главная</span> / Новости</h4>
+    <h3>Новости</h3>
 
-    <h3 ref="scrollAnchor">Новости</h3>
     <div class="news__cards">
-      <div class="news__card" v-for="item in newsVisible" :key="item.id">
-        <img class="card__img" :src="item.img" alt="" />
-        <p class="card__date">{{ item.date }}</p>
+      <div class="news__card">
+        <img class="card__img" src="/img/news/news_1.png" alt="" />
+        <p class="card__date">6 июля 2025</p>
         <div class="card__text">
-          <h4>{{ item.title }}</h4>
+          <h4>Grand Egyptian Museum: A New Cultural Landmark</h4>
           <p>
-            {{ item.text }}
+            Scheduled to officially open on July 6, 2025, the Grand Egyptian Museum near Cairo will be the world's largest archaeological museum. The museum will house a vast collection of ancient Egyptian artifacts, including the complete Tutankhamun collection.
           </p>
         </div>
       </div>
-      <Pagination
-        @click-pagination="handleClickPagination"
-        :maxValue="countPageOnPagination"
-      />
+
+      <div class="news__card">
+        <img class="card__img" src="/img/news/news_2.png" alt="" />
+        <p class="card__date">20 мая 2025</p>
+        <div class="card__text">
+          <h4>Rolex Pavilion: A Testament to Sustainable Architecture</h4>
+          <p>
+            At the Venice Architecture Biennale, Rolex unveiled a new pavilion designed by architect Mariam Issoufou. Constructed with eco-friendly materials like recycled timber and terrazzo flooring with reused glass aggregate, the pavilion reflects a commitment to sustainability and design excellence.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue';
-import { newsData } from '@/data/news';
-
-const news = ref(newsData);
-const indexPage = ref(1);
-const MAX_NEWS_ON_PAGE = 12;
-const newsVisible = ref(newsData.slice(0, MAX_NEWS_ON_PAGE));
-const scrollAnchor = ref<HTMLElement>();
-
-const totalCountNews = newsData.length;
-const countPageOnPagination = Math.ceil(totalCountNews / MAX_NEWS_ON_PAGE);
-
-async function handleClickPagination(a: number) {
-  indexPage.value = a;
-  newsVisible.value = news.value.slice(
-    (indexPage.value - 1) * MAX_NEWS_ON_PAGE,
-    indexPage.value * MAX_NEWS_ON_PAGE
-  );
-
-  await nextTick();
-  if (scrollAnchor.value) {
-    scrollAnchor.value.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  }
-}
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 span {
   color: $color-primary;
 }
+
 .route {
   margin: 40px;
-
   font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
   font-size: 20px;
-  line-height: 135%;
-
   color: grey;
 }
+
 .news {
   padding: 40px;
-  .news__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+
   h3 {
     font-family: 'Montserrat';
-    font-style: normal;
     font-weight: 700;
     font-size: 38px;
-    line-height: 120%;
+    margin-bottom: 20px;
   }
-  h4 {
-    margin: 0;
-  }
+
   .news__cards {
     display: flex;
     flex-wrap: wrap;
@@ -93,15 +63,39 @@ span {
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      margin: 20px 20px;
+      margin: 20px;
       max-width: 300px;
       transition: 0.3s;
-      p {
-        color: #666666;
+
+      .card__img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
       }
-    }
-    .news__card:hover {
-      transform: translateY(-20px);
+
+      .card__date {
+        color: #999;
+        margin-top: 5px;
+        font-size: 14px;
+      }
+
+      .card__text {
+        margin-top: 10px;
+
+        h4 {
+          font-size: 18px;
+          margin-bottom: 5px;
+        }
+
+        p {
+          color: #666;
+          font-size: 14px;
+        }
+      }
+
+      &:hover {
+        transform: translateY(-10px);
+      }
     }
   }
 }

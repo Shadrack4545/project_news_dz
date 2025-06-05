@@ -9,24 +9,27 @@
       <ul>
         <li>
           <NuxtLink
-            to="/"
+            to="/projects"
             :class="{ active: route.path.startsWith('/projects') }"
-            >Реализованные проекты</NuxtLink
           >
+            Реализованные проекты
+          </NuxtLink>
         </li>
         <li>
           <NuxtLink
             to="/news"
             :class="{ active: route.path.startsWith('/news') }"
-            >Новости</NuxtLink
           >
+            Новости
+          </NuxtLink>
         </li>
         <li>
           <NuxtLink
             to="/contacts"
             :class="{ active: route.path.startsWith('/contacts') }"
-            >Контакты</NuxtLink
           >
+            Контакты
+          </NuxtLink>
         </li>
       </ul>
     </nav>
@@ -61,6 +64,7 @@ function goHome() {
 }
 
 const showModal = ref(false);
+
 function onModalSubmit(payload: {
   name: string;
   phone: string;
@@ -78,6 +82,7 @@ function onModalSubmit(payload: {
   padding: 0 20px;
   height: 64px;
   margin: 20px;
+  
   .header__item {
     display: flex;
     align-items: center;

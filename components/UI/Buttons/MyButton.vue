@@ -27,7 +27,6 @@ button {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height */
   text-align: center;
   letter-spacing: 0.15px;
   border-radius: 10px;

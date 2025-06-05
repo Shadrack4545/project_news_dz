@@ -109,8 +109,10 @@ $breakpoint-lg: 768px;
   .slide {
     min-width: 100%;
     height: 500px;
-    position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     img {
       width: 100%;
@@ -151,10 +153,6 @@ $breakpoint-lg: 768px;
     &--right {
       right: 20px;
     }
-
-    @media screen and (max-width: $breakpoint-lg) {
-      display: none;
-    }
   }
 
   .dots {
@@ -164,10 +162,6 @@ $breakpoint-lg: 768px;
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
-
-    @media screen and (max-width: $breakpoint-lg) {
-      display: none;
-    }
 
     .dot {
       width: 12px;
@@ -193,11 +187,14 @@ $breakpoint-lg: 768px;
 
 .slider__text {
   position: absolute;
-  top: 30px;
-  left: 40px;
-  max-width: 60%;
+  max-width: 50%;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
   z-index: 5;
-  color: #000000; 
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
   text-align: left;
 
   h2 {
@@ -205,12 +202,14 @@ $breakpoint-lg: 768px;
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 10px;
+    line-height: 120%;
   }
 
   p {
     font-family: $font-secondary;
     font-size: 16px;
     font-weight: 400;
+    line-height: 135%;
   }
 
   @media screen and (max-width: $breakpoint-lg) {
