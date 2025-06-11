@@ -23,17 +23,18 @@
       <line class="line3" x1="3" y1="17" x2="21" y2="17" />
     </svg>
   </div>
+
   <div v-show="drawerOpen" class="overlay" @click="toggleDrawer"></div>
 
   <div class="drawer" :class="{ open: drawerOpen }">
     <nav>
-      <NuxtLink :to="'/'">Реализованные проекты</NuxtLink>
-      <NuxtLink :to="'/news'">Новости</NuxtLink>
-      <NuxtLink :to="'/contacts'">Контакты</NuxtLink>
+      <NuxtLink to="/">Реализованные проекты</NuxtLink>
+      <NuxtLink to="/news">Новости</NuxtLink>
+      <NuxtLink to="/contacts">Контакты</NuxtLink>
     </nav>
 
     <div class="drawer__contacts">
-      <a :href="'tel:' + contacts.phone">{{ contacts.phone }}</a>
+      <a :href="`tel:${contacts.phone}`">{{ contacts.phone }}</a>
       <a>{{ contacts.email }}</a>
       <a>{{ contacts.address }}</a>
     </div>
@@ -42,13 +43,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
 import { contacts } from '~/data/contacts';
 
-const router = useRouter();
-const route = useRoute();
-
-const drawerOpen = ref<boolean>(false);
+const drawerOpen = ref(false);
 
 const toggleDrawer = (): void => {
   drawerOpen.value = !drawerOpen.value;
@@ -72,7 +69,7 @@ watch(drawerOpen, (isOpen) => {
   if (isOpen) {
     document.body.style.overflow = 'hidden';
   } else {
-    document.body.style.overflow = 'visible';
+    document.body.style.overflow = '';
   }
 });
 </script>
@@ -95,38 +92,37 @@ watch(drawerOpen, (isOpen) => {
   }
 
   line {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    transform-origin: center;
   }
 
   &.open {
     line.line1 {
-      transform: translateY(5px) rotate(45deg);
-      transform-origin: center;
+      transform: rotate(45deg) translate(5px, 5px);
     }
     line.line2 {
       opacity: 0;
     }
     line.line3 {
-      transform: translateY(-5px) rotate(-45deg);
-      transform-origin: center;
+      transform: rotate(-45deg) translate(4px, -4px);
     }
   }
 }
 
 .drawer {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: fixed;
   top: 0;
   right: 0;
   height: 100%;
-  background: $color-primary;
   width: 65%;
+  background: $color-primary;
   z-index: 99;
-  transform: translateX(100%);
-  transition: transform 0.2s ease-in-out;
   padding: 80px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateX(100%);
+  transition: all 0.2s ease-in-out;
 
   nav {
     display: flex;
@@ -137,12 +133,11 @@ watch(drawerOpen, (isOpen) => {
       text-decoration: none;
       color: #fff;
       margin: 3% 0;
-
       font-family: $font-secondary;
       font-weight: 400;
       font-size: 18px;
       line-height: 120%;
-      transition: 0.3s;
+      transition: opacity 0.3s;
 
       &:hover {
         opacity: 0.6;
@@ -162,11 +157,10 @@ watch(drawerOpen, (isOpen) => {
       margin: 3% 0;
       display: flex;
       align-items: center;
-
       font-family: $font-primary;
       font-weight: 400;
       font-size: 14px;
-      transition: 0.3s;
+      transition: opacity 0.3s;
 
       &:hover {
         opacity: 0.6;
@@ -220,6 +214,6 @@ watch(drawerOpen, (isOpen) => {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 90;
-  transition: opacity 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 </style>

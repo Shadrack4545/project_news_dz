@@ -14,9 +14,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import UIContactsList from '@/components/UIContactsList.vue';
-import Map from '@/components/Map.vue';
+<script lang="ts">
+import { ref } from 'vue';
 </script>
 
 <style lang="scss" scoped>

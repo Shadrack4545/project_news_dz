@@ -4,7 +4,7 @@
     <h3>Новости</h3>
 
     <div class="news__cards">
-      <div class="news__card">
+      <div class="news__card card">
         <img class="card__img" src="/img/news/news_1.png" alt="" />
         <p class="card__date">6 июля 2025</p>
         <div class="card__text">
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="news__card">
+      <div class="news__card card">
         <img class="card__img" src="/img/news/news_2.png" alt="" />
         <p class="card__date">20 мая 2025</p>
         <div class="card__text">
@@ -30,6 +30,7 @@
 </template>
 
 <script setup lang="ts">
+// no changes here
 </script>
 
 <style scoped lang="scss">
@@ -66,21 +67,28 @@ span {
       margin: 20px;
       max-width: 300px;
       transition: 0.3s;
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
 
       .card__img {
         width: 100%;
         height: auto;
-        border-radius: 10px;
+        border-radius: 20px 20px 0 0;
+        object-fit: cover;
       }
 
       .card__date {
         color: #999;
         margin-top: 5px;
         font-size: 14px;
+        margin-left: 15px;
       }
 
       .card__text {
         margin-top: 10px;
+        margin-left: 15px;
+        margin-right: 15px;
 
         h4 {
           font-size: 18px;
